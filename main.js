@@ -16,6 +16,8 @@ var game = {
       c.style.top = Math.floor(i / 3) * 33 + '%';
       c.style.background = ['red', 'orange', 'yellow', 'green', 'blue', 'purple', 'brown', 'pink', 'teal'][i];
       c.onclick = ((j) => function(e) {game.selectGame(e,j);})(i);
+
+      c.innerHTML = '<button type="button" class="button_close">Close</button>';
     }
     var closeButtons = document.getElementsByClassName('button_close');
     var button;
