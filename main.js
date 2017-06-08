@@ -12,8 +12,8 @@ var game = {
     for (i = 0; i < 9; i++) {
       c = document.getElementById('game_container_' + i);
       game.gameContainers[i] = c;
-      c.style.left = (i % 3) * 33 + '%';
-      c.style.top = Math.floor(i / 3) * 33 + '%';
+      c.style.left = (i % 3) * 33.3 + '%';
+      c.style.top = Math.floor(i / 3) * 33.3 + '%';
       c.style.background = ['red', 'orange', 'yellow', 'green', 'blue', 'purple', 'brown', 'pink', 'teal'][i];
       c.onclick = ((j) => function(e) {game.selectGame(e,j);})(i);
 
@@ -27,7 +27,6 @@ var game = {
     }
   },
   selectGame: function(e,gameNum) {
-    console.log('selectGame', gameNum);
     var i;
     var c;
     for (i = 0; i < 9; i++) {
@@ -38,10 +37,10 @@ var game = {
         c.style.left = 0;
         c.style.top = 0;
       } else {
-        c.style.transform = 'scale(0.33, 0.33)';
+        c.style.transform = 'scale(0.333, 0.333)';
         c.style.zIndex = 0;
-        c.style.left = (i % 3) * 33 + '%';
-        c.style.top = Math.floor(i / 3) * 33 + '%';
+        c.style.left = (i % 3) * 33.3 + '%';
+        c.style.top = Math.floor(i / 3) * 33.3 + '%';
       }
     }
     if (gameNum === -1) {
