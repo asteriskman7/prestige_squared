@@ -1,8 +1,50 @@
 'use strict';
 
 var game = {
+  gameContainers: [],
   init: function() {
     console.log('init');
+    game.initGameContainers()
+  },
+  initGameContainers: function() {
+    var i;
+    var c;
+    for (i = 0; i < 9; i++) {
+      c = document.getElementById('game_container_' + i);
+      game.gameContainers[i] = c;
+      c.style.left = (i % 3) * 33 + '%';
+      c.style.top = Math.floor(i / 3) * 33 + '%';
+      c.style.background = ['red', 'orange', 'yellow', 'green', 'blue', 'purple', 'brown', 'pink', 'teal'][i];
+      c.onclick = ((j) => function(e) {game.selectGame(e,j);})(i);
+    }
+    var closeButtons = document.getElementsByClassName('button_close');
+    var button;
+    for (i = 0; i < closeButtons.length; i++) {
+      button = closeButtons.item(i);
+      button.onclick = (e) => game.selectGame(e,-1);
+    }
+  },
+  selectGame: function(e,gameNum) {
+    console.log('selectGame', gameNum);
+    var i;
+    var c;
+    for (i = 0; i < 9; i++) {
+      c = game.gameContainers[i];
+      if (i == gameNum) {
+        c.style.transform = 'scale(1.0, 1.0)';
+        c.style.zIndex = 10;
+        c.style.left = 0;
+        c.style.top = 0;
+      } else {
+        c.style.transform = 'scale(0.33, 0.33)';
+        c.style.zIndex = 0;
+        c.style.left = (i % 3) * 33 + '%';
+        c.style.top = Math.floor(i / 3) * 33 + '%';
+      }
+    }
+    if (gameNum === -1) {
+      e.stopPropagation();
+    }
   }
 };
 
