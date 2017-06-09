@@ -56,7 +56,7 @@ var game = {
     if (game.lastLoopTime !== undefined) {
       deltaTime = timestamp - game.lastLoopTime;
       game.games.forEach(g => {
-        g.update();
+        g.update(deltaTime / 1000);
         g.draw();
       });
     }
