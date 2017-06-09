@@ -7,6 +7,15 @@ body {
   flex-flow: column;
 }
 
+table {
+  text-align: center;
+  margin: auto;
+}
+
+td {
+  min-width: 8em;
+}
+
 #grid_container {
   position: relative;
   flex: 1 1 auto;
@@ -29,8 +38,17 @@ body {
 #title {
   font-size: 30px;
   flex: 0 1 50px;
+  color: #ffffec;
 }
 
 #meta_container {
   flex: 0 1 50px;
+}
+
+.coins {
+  font-size: 3em;
+}
+
+.cps {
+  font-size: 2em;
 }
