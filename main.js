@@ -2,6 +2,8 @@
 
 var game = {
   gameContainers: [],
+  games: [],
+  lastLoopTime: undefined,
   init: function() {
     console.log('init');
     game.initGameContainers()
@@ -12,12 +14,13 @@ var game = {
     for (i = 0; i < 9; i++) {
       c = document.getElementById('game_container_' + i);
       game.gameContainers[i] = c;
+      game.games[i] = new Prestige(c, 'game' + i);
       c.style.left = (i % 3) * 33.3 + '%';
       c.style.top = Math.floor(i / 3) * 33.3 + '%';
       c.style.background = ['red', 'orange', 'yellow', 'green', 'blue', 'purple', 'brown', 'pink', 'teal'][i];
       c.onclick = ((j) => function(e) {game.selectGame(e,j);})(i);
 
-      c.innerHTML = '<button type="button" class="button_close">Close</button>';
+      //c.innerHTML = '<button type="button" class="button_close">Close</button>';
     }
     var closeButtons = document.getElementsByClassName('button_close');
     var button;
@@ -25,6 +28,7 @@ var game = {
       button = closeButtons.item(i);
       button.onclick = (e) => game.selectGame(e,-1);
     }
+    window.requestAnimationFrame(game.loop);
   },
   selectGame: function(e,gameNum) {
     var i;
@@ -46,6 +50,19 @@ var game = {
     if (gameNum === -1) {
       e.stopPropagation();
     }
+  },
+  loop: function(timestamp) {
+    var deltaTime;
+    if (game.lastLoopTime !== undefined) {
+      deltaTime = timestamp - game.lastLoopTime;
+      game.games.forEach(g => {
+        g.update();
+        g.draw();
+      });
+    }
+
+    game.lastLoopTime = timestamp;
+    window.requestAnimationFrame(game.loop); 
   }
 };
 
