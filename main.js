@@ -11,16 +11,20 @@ var game = {
   initGameContainers: function() {
     var i;
     var c;
+    var col;
+    var row;
+    var color;
     for (i = 0; i < 9; i++) {
       c = document.getElementById('game_container_' + i);
       game.gameContainers[i] = c;
       game.games[i] = new Prestige(c, 'game' + i);
-      c.style.left = (i % 3) * 33.3 + '%';
-      c.style.top = Math.floor(i / 3) * 33.3 + '%';
-      c.style.background = ['red', 'orange', 'yellow', 'green', 'blue', 'purple', 'brown', 'pink', 'teal'][i];
+      col = i % 3;
+      row = Math.floor(i / 3);
+      c.style.left = col * 33.3 + '%';
+      c.style.top = row * 33.3 + '%';
+      color = 'hsl(' + (360 * i / 9) + ', 66%, 66%)';
+      c.style.background = color;
       c.onclick = ((j) => function(e) {game.selectGame(e,j);})(i);
-
-      //c.innerHTML = '<button type="button" class="button_close">Close</button>';
     }
     var closeButtons = document.getElementsByClassName('button_close');
     var button;
