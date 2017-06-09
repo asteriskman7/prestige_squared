@@ -4,25 +4,30 @@ class Prestige {
   constructor(topDiv, name) {
     this.name = name;
     this.topDiv = topDiv
-    this.score = 0;
+    this.coins = 0;
+    this.cps = 1;
 
     this.topDiv.innerHTML = this.genCloseButton() + this.genHeader() + this.genLevels();
-    this.scoreDiv = document.getElementById(this.name + '_score');
+    this.coinsDiv = document.getElementById(this.name + '_coins');
+    this.cpsDiv = document.getElementById(this.name + '_cps');
     this.draw();
   }
   genCloseButton() {
     return '<button type="button" class="button_close">X</button>';
   }
   genHeader() {  
-    return '<div>HEADER</div><div id="'+ this.name + '_score"></div>';
+    var html = '<div><div><span id="'+ this.name + '_coins"></span> coins</div><div>'
+    html += '<span id="' + this.name + '_cps"></span> coins/second</div></div>';
+    return html;
   }
   genLevels() {
     return '<div>LEVELS</div>';
   }
-  update() {
-    this.score += 1;
+  update(deltaTime) {
+    this.coins += this.cps * deltaTime;
   }
   draw() {
-    this.scoreDiv.innerHTML = this.score;
+    this.coinsDiv.innerHTML = Math.floor(this.coins);
+    this.cpsDiv.innerHTML = this.cps;
   }
 }
