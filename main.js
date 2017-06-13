@@ -4,6 +4,7 @@ var game = {
   gameContainers: [],
   games: [],
   lastLoopTime: undefined,
+  state: {},
   init: function() {
     console.log('init');
     game.initGameContainers()
@@ -32,8 +33,11 @@ var game = {
       button = closeButtons.item(i);
       button.onclick = (e) => game.selectGame(e,-1);
     }
-    //window.requestAnimationFrame(game.loop);
+
+    game.load();
+
     setInterval(game.loop, 1000);
+    setInterval(game.save, 10000);
   },
   selectGame: function(e,gameNum) {
     var i;
@@ -67,9 +71,26 @@ var game = {
       });
     }
 
-    game.lastLoopTime = Date.now();
-    //game.lastLoopTime = timestamp;
-    //window.requestAnimationFrame(game.loop); 
+    game.lastLoopTime = timestamp;
+  },
+  save: function() {
+    var gameSaves = [];
+    var i;
+    for (i = 0; i < 9; i++) {
+      gameSaves[i] = game.games[i].save();
+    }
+    game.state.gameSaves = gameSaves;
+    localStorage.setItem('prestige_squared', JSON.stringify(game.state));
+  },
+  load: function() {
+    var saveString = localStorage.getItem('prestige_squared');
+    var i;
+    if (saveString !== null) {
+      game.state = JSON.parse(saveString);
+      for (i = 0; i < 9; i++) {
+        game.games[i].load(game.state.gameSaves[i]);
+      }
+    }
   }
 };
 

@@ -78,6 +78,30 @@ class Prestige {
     html += '</table></div>';
     return html;
   }
+  save() {
+    var saveString;
+    var saveObj = {coins: this.coins};
+    var i = 0;
+    this.levels.forEach((l) => {
+      saveObj[i] = l.count;
+      i++;
+    });
+    saveString = JSON.stringify(saveObj);
+    return saveString;
+  }
+  load(saveString) {
+    var saveObj;
+    if (saveString !== null) {
+      saveObj = JSON.parse(saveString);
+      this.coins = saveObj.coins;
+      var i = 0;
+      this.levels.forEach((l) => {
+        l.count = saveObj[i];
+        i++;
+      });
+      this.cps = this.getCps();
+    }
+  }
   getCps() {
     var cps = 1;
     this.levels.forEach((l) => {
