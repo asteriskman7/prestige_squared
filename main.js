@@ -32,7 +32,8 @@ var game = {
       button = closeButtons.item(i);
       button.onclick = (e) => game.selectGame(e,-1);
     }
-    window.requestAnimationFrame(game.loop);
+    //window.requestAnimationFrame(game.loop);
+    setInterval(game.loop, 1000);
   },
   selectGame: function(e,gameNum) {
     var i;
@@ -55,8 +56,9 @@ var game = {
       e.stopPropagation();
     }
   },
-  loop: function(timestamp) {
+  loop: function() {
     var deltaTime;
+    var timestamp = Date.now();
     if (game.lastLoopTime !== undefined) {
       deltaTime = timestamp - game.lastLoopTime;
       game.games.forEach(g => {
@@ -65,8 +67,9 @@ var game = {
       });
     }
 
-    game.lastLoopTime = timestamp;
-    window.requestAnimationFrame(game.loop); 
+    game.lastLoopTime = Date.now();
+    //game.lastLoopTime = timestamp;
+    //window.requestAnimationFrame(game.loop); 
   }
 };
 

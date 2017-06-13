@@ -3,7 +3,6 @@
 class Prestige {
   constructor(topDiv, name) {
     var i;
-    var b;
     this.name = name;
     this.topDiv = topDiv
     this.coins = 0;
@@ -11,12 +10,22 @@ class Prestige {
     this.cps = this.getCps();
 
     this.topDiv.innerHTML = this.genCloseButton() + this.genHeader() + this.genLevels();
-    this.coinsDiv = document.getElementById(this.name + '_coins');
-    this.cpsDiv = document.getElementById(this.name + '_cps');
+
+    this.divs = {};
+    this.divs.coinsDiv = document.getElementById(this.name + '_coins');
+    this.divs.cpsDiv = document.getElementById(this.name + '_cps');
+
+    this.divs.reqs = [];
+    this.divs.counts = [];
+    this.divs.effects = [];
+    this.divs.activates = [];
 
     for (i = 0; i < this.levels.length; i++) {
-      b = document.getElementById(this.name + '_activate_' + i);  
-      b.onclick = ((j,obj) => function() {obj.buy.bind(obj)(j);})(i,this);
+      this.divs.reqs.push(document.getElementById(this.name + '_requirement_' + i));
+      this.divs.counts.push(document.getElementById(this.name + '_count_' + i));
+      this.divs.effects.push(document.getElementById(this.name + '_effect_' + i));
+      this.divs.activates.push(document.getElementById(this.name + '_activate_' + i));
+      this.divs.activates[i].onclick = ((j,obj) => function() {obj.buy.bind(obj)(j);})(i,this);
     }
 
     this.draw();
@@ -101,14 +110,14 @@ class Prestige {
     this.coins += this.cps * deltaTime;
   }
   draw() {
-    this.coinsDiv.innerHTML = Math.floor(this.coins);
-    this.cpsDiv.innerHTML = this.cps;
+    this.divs.coinsDiv.innerText = Math.floor(this.coins);
+    this.divs.cpsDiv.innerText = this.cps;
     var i = 0;
     this.levels.forEach((l) => {
-      document.getElementById(this.name + '_requirement_' + i).innerHTML = l.requirement(l.count) + 'x Tier ' + Prestige.intToTier(i);      
-      document.getElementById(this.name + '_count_' + i).innerHTML = l.count;
-      document.getElementById(this.name + '_effect_' + i).innerHTML = 'x' + l.effect(l.count);
-      document.getElementById(this.name + '_activate_' + i).disabled = !this.canBuy(i);
+      this.divs.reqs[i].innerText = l.requirement(l.count) + 'x Tier ' + Prestige.intToTier(i);      
+      this.divs.counts[i].innerText = l.count;
+      this.divs.effects[i].innerText = 'x' + l.effect(l.count);
+      this.divs.activates[i].disabled = !this.canBuy(i);
       i += 1;
     });
   }
