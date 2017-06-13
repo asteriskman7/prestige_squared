@@ -14,7 +14,8 @@ table {
 }
 
 td {
-  min-width: 8em;
+  width: 8em;
+  padding-top: 0.5em;
 }
 
 #grid_container {
