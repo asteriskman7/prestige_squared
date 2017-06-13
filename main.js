@@ -23,7 +23,7 @@ var game = {
       c.style.left = col * 33.3 + '%';
       c.style.top = row * 33.3 + '%';
       color = 'hsl(' + (360 * i / 9) + ', 66%, 66%)';
-      c.style.background = color;
+      c.style.backgroundColor = color;
       c.onclick = ((j) => function(e) {game.selectGame(e,j);})(i);
     }
     var closeButtons = document.getElementsByClassName('button_close');

@@ -5,6 +5,7 @@ body {
   font-family: sans-serif;
   display: flex;
   flex-flow: column;
+  height: 95%
 }
 
 table {
