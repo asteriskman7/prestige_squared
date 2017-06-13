@@ -96,6 +96,7 @@ class Prestige {
       }
       l.count += 1;
     }
+    this.draw();
   }
   canBuy(level) {
     var l = this.levels[level];
