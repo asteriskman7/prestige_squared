@@ -96,6 +96,7 @@ class Prestige {
       }
       l.count += 1;
     }
+    this.cps = this.getCps();
     this.draw();
   }
   canBuy(level) {
@@ -107,7 +108,6 @@ class Prestige {
     }
   }
   update(deltaTime) {
-    this.cps = this.getCps();
     this.coins += this.cps * deltaTime;
   }
   draw() {
@@ -115,7 +115,7 @@ class Prestige {
     this.divs.cpsDiv.innerText = this.cps;
     var i = 0;
     this.levels.forEach((l) => {
-      this.divs.reqs[i].innerText = l.requirement(l.count) + 'x Tier ' + Prestige.intToTier(i);      
+      this.divs.reqs[i].innerText = l.requirement(l.count) + 'x Tier ' + Prestige.intToTier(i);
       this.divs.counts[i].innerText = l.count;
       this.divs.effects[i].innerText = 'x' + l.effect(l.count);
       this.divs.activates[i].disabled = !this.canBuy(i);
