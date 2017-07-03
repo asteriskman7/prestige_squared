@@ -9,7 +9,7 @@ class Prestige {
     this.levels = this.getLevelInfo();
     this.cps = this.getCps();
 
-    this.topDiv.innerHTML = this.genCloseButton() + this.genHeader() + this.genLevels();
+    this.topDiv.innerHTML = this.genCloseButton() + '<h1>' + this.getTitle() + '</h1>' + this.genHeader() + this.genLevels();
 
     this.divs = {};
     this.divs.coinsDiv = document.getElementById(this.name + '_coins');
@@ -29,6 +29,9 @@ class Prestige {
     }
 
     this.draw();
+  }
+  getTitle() {
+    return 'Prestige Classic';
   }
   getLevelInfo() {
     return [
@@ -134,6 +137,9 @@ class Prestige {
   update(deltaTime) {
     this.coins += this.cps * deltaTime;
   }
+  offlineGains(deltaTime) {
+    this.update(deltaTime);
+  }
   draw() {
     this.divs.coinsDiv.innerText = Math.floor(this.coins);
     this.divs.cpsDiv.innerText = this.cps;
@@ -145,5 +151,54 @@ class Prestige {
       this.divs.activates[i].disabled = !this.canBuy(i);
       i += 1;
     });
+  }
+}
+
+
+////////////////////
+
+class PrestigeOne extends Prestige {
+  getTitle() { return 'Prestige One'; }
+  getLevelInfo() {
+    return [
+      {name: 'One',              requirement: (level) => 1, effect: (level) => level+1, count: 0},
+      {name: 'Two',              requirement: (level) => 1, effect: (level) => level+1, count: 0},
+      {name: 'Three',            requirement: (level) => 1, effect: (level) => level+1, count: 0}, 
+      {name: 'Four',             requirement: (level) => 1, effect: (level) => level+1, count: 0}, 
+      {name: 'Five',             requirement: (level) => 1, effect: (level) => level+1, count: 0}, 
+      {name: 'Six',              requirement: (level) => 1, effect: (level) => level+1, count: 0}, 
+      {name: 'Seven',            requirement: (level) => 1, effect: (level) => level+1, count: 0}, 
+      {name: 'Eight',            requirement: (level) => 1, effect: (level) => level+1, count: 0}, 
+      {name: 'Nine',             requirement: (level) => 1, effect: (level) => level+1, count: 0}, 
+      {name: 'Ten',              requirement: (level) => 1, effect: (level) => level+1, count: 0}, 
+    ];
+  }
+}
+
+class PrestigeOneOffline extends PrestigeOne {
+  getTitle() { return 'Prestige One Offline'; }
+  update(deltaTime) {
+  }
+  offlineGains(deltaTime) {
+    this.coins += this.cps * deltaTime;
+  }
+}
+
+class PrestigeOneNoReset extends PrestigeOne {
+  getTitle() { return 'Prestige One No Reset'; }
+  buy(level) {
+    var l = this.levels[level];
+    var i;
+    if (this.canBuy(level)) {
+      if (level === 0) {
+        this.coins -= l.requirement(l.count);
+        l.count += 1;
+      } else {
+        this.levels[level - 1].count -= l.requirement(l.count);
+        l.count += 1;
+      }
+    }
+    this.cps = this.getCps();
+    this.draw();
   }
 }
