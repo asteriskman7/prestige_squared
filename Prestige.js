@@ -5,11 +5,12 @@ class Prestige {
     var i;
     this.name = name;
     this.topDiv = topDiv
+    this.active = false;
     this.coins = 0;
     this.levels = this.getLevelInfo();
     this.cps = this.getCps();
 
-    this.topDiv.innerHTML = this.genCloseButton() + '<h1>' + this.getTitle() + '</h1>' + this.genHeader() + this.genLevels();
+    this.topDiv.innerHTML = this.genDisableDiv() + this.genCloseButton() + this.genTitle() + this.genHeader() + this.genLevels();
 
     this.divs = {};
     this.divs.coinsDiv = document.getElementById(this.name + '_coins');
@@ -29,6 +30,16 @@ class Prestige {
     }
 
     this.draw();
+  }
+  activate() {
+    this.active = true;
+    document.getElementById('game_container_disable_' + this.name).style.display = 'none';
+  }
+  genDisableDiv() {
+    return '<div id="game_container_disable_' + this.name + '" class="game_container_disable"></div>';
+  }
+  genTitle() {
+    return '<h1>' + this.getTitle() + '</h1>';
   }
   getTitle() {
     return 'Prestige Classic';
@@ -135,7 +146,9 @@ class Prestige {
     }
   }
   update(deltaTime) {
-    this.coins += this.cps * deltaTime;
+    if (this.active) {
+      this.coins += this.cps * deltaTime;
+    }
   }
   offlineGains(deltaTime) {
     this.update(deltaTime);
@@ -161,16 +174,16 @@ class PrestigeOne extends Prestige {
   getTitle() { return 'Prestige One'; }
   getLevelInfo() {
     return [
-      {name: 'One',              requirement: (level) => 1, effect: (level) => level+1, count: 0},
-      {name: 'Two',              requirement: (level) => 1, effect: (level) => level+1, count: 0},
-      {name: 'Three',            requirement: (level) => 1, effect: (level) => level+1, count: 0}, 
-      {name: 'Four',             requirement: (level) => 1, effect: (level) => level+1, count: 0}, 
-      {name: 'Five',             requirement: (level) => 1, effect: (level) => level+1, count: 0}, 
-      {name: 'Six',              requirement: (level) => 1, effect: (level) => level+1, count: 0}, 
-      {name: 'Seven',            requirement: (level) => 1, effect: (level) => level+1, count: 0}, 
-      {name: 'Eight',            requirement: (level) => 1, effect: (level) => level+1, count: 0}, 
-      {name: 'Nine',             requirement: (level) => 1, effect: (level) => level+1, count: 0}, 
-      {name: 'Ten',              requirement: (level) => 1, effect: (level) => level+1, count: 0}, 
+      {name: 'One',              requirement: (level) => 1, effect: (level) => 1, count: 0},
+      {name: 'Two',              requirement: (level) => 1, effect: (level) => 1, count: 0},
+      {name: 'Three',            requirement: (level) => 1, effect: (level) => 1, count: 0}, 
+      {name: 'Four',             requirement: (level) => 1, effect: (level) => 1, count: 0}, 
+      {name: 'Five',             requirement: (level) => 1, effect: (level) => 1, count: 0}, 
+      {name: 'Six',              requirement: (level) => 1, effect: (level) => 1, count: 0}, 
+      {name: 'Seven',            requirement: (level) => 1, effect: (level) => 1, count: 0}, 
+      {name: 'Eight',            requirement: (level) => 1, effect: (level) => 1, count: 0}, 
+      {name: 'Nine',             requirement: (level) => 1, effect: (level) => 1, count: 0}, 
+      {name: 'Ten',              requirement: (level) => 1, effect: (level) => 1, count: 0}, 
     ];
   }
 }
@@ -180,7 +193,9 @@ class PrestigeOneOffline extends PrestigeOne {
   update(deltaTime) {
   }
   offlineGains(deltaTime) {
-    this.coins += this.cps * deltaTime;
+    if (this.active) {
+      this.coins += this.cps * deltaTime;
+    }
   }
 }
 
@@ -202,3 +217,5 @@ class PrestigeOneNoReset extends PrestigeOne {
     this.draw();
   }
 }
+
+

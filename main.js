@@ -4,6 +4,7 @@ var game = {
   gameContainers: [],
   games: [],
   state: {},
+  eMeta: undefined,
   init: function() {
     console.log('init');
     game.initGameContainers()
@@ -36,12 +37,15 @@ var game = {
       c.style.backgroundColor = color;
       c.onclick = ((j) => function(e) {game.selectGame(e,j);})(i);
     }
+    game.games[0].activate();
     var closeButtons = document.getElementsByClassName('button_close');
     var button;
     for (i = 0; i < closeButtons.length; i++) {
       button = closeButtons.item(i);
       button.onclick = (e) => game.selectGame(e,-1);
     }
+
+    game.eMeta = document.getElementById('span_metacoins');
 
     game.load();
 
@@ -55,7 +59,7 @@ var game = {
     var c;
     for (i = 0; i < 9; i++) {
       c = game.gameContainers[i];
-      if (i == gameNum) {
+      if (i == gameNum && game.games[i].active) {
         c.style.transform = 'scale(1.0, 1.0)';
         c.style.zIndex = 10;
         c.style.left = 0;
@@ -83,9 +87,20 @@ var game = {
       g.update(deltaTime / 1000);
       g.draw();
     });
+
+    
+    game.eMeta.innerText = game.state.metacoins + ' (' + game.getTotal() + ')';
+
     game.save();
 
     game.state.lastLoopTime = timestamp;
+  },
+  getTotal: function() {
+    var total = 0;
+    game.games.forEach(g => {
+      total += Math.floor(g.coins);
+    });
+    return total;
   },
   offlineGains: function() {
     var offlineTime;
@@ -113,6 +128,9 @@ var game = {
       for (i = 0; i < 9; i++) {
         game.games[i].load(game.state.gameSaves[i]);
       }
+    } else {
+      game.state = {};
+      game.state.metacoins = 0;
     }
   },
   reset: function() {
