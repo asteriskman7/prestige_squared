@@ -3,7 +3,6 @@
 var game = {
   gameContainers: [],
   games: [],
-  lastLoopTime: undefined,
   state: {},
   init: function() {
     console.log('init');
@@ -15,10 +14,20 @@ var game = {
     var col;
     var row;
     var color;
+    var gameVersions = [];
+    gameVersions[0] = PrestigeOne;
+    gameVersions[1] = PrestigeOneOffline;
+    gameVersions[2] = PrestigeOneNoReset;
+    gameVersions[3] = Prestige;
+    gameVersions[4] = Prestige;
+    gameVersions[5] = Prestige;
+    gameVersions[6] = Prestige;
+    gameVersions[7] = Prestige;
+    gameVersions[8] = Prestige;
     for (i = 0; i < 9; i++) {
       c = document.getElementById('game_container_' + i);
       game.gameContainers[i] = c;
-      game.games[i] = new Prestige(c, 'game' + i);
+      game.games[i] = new gameVersions[i](c, 'game' + i);
       col = i % 3;
       row = Math.floor(i / 3);
       c.style.left = col * 33.3 + '%';
@@ -36,8 +45,10 @@ var game = {
 
     game.load();
 
+    game.offlineGains();
+
     setInterval(game.loop, 1000);
-    setInterval(game.save, 10000);
+    //setInterval(game.save, 10000);
   },
   selectGame: function(e,gameNum) {
     var i;
@@ -63,15 +74,27 @@ var game = {
   loop: function() {
     var deltaTime;
     var timestamp = Date.now();
-    if (game.lastLoopTime !== undefined) {
-      deltaTime = timestamp - game.lastLoopTime;
+    if (game.state.lastLoopTime !== undefined) {
+      deltaTime = timestamp - game.state.lastLoopTime;
+    } else {
+      deltaTime = 0;
+    }
+    game.games.forEach(g => {
+      g.update(deltaTime / 1000);
+      g.draw();
+    });
+    game.save();
+
+    game.state.lastLoopTime = timestamp;
+  },
+  offlineGains: function() {
+    var offlineTime;
+    if (game.state.lastLoopTime !== undefined) {
+      offlineTime = Date.now() - game.state.lastLoopTime;
       game.games.forEach(g => {
-        g.update(deltaTime / 1000);
-        g.draw();
+        g.offlineGains(offlineTime / 1000);
       });
     }
-
-    game.lastLoopTime = timestamp;
   },
   save: function() {
     var gameSaves = [];
@@ -91,6 +114,10 @@ var game = {
         game.games[i].load(game.state.gameSaves[i]);
       }
     }
+  },
+  reset: function() {
+    localStorage.removeItem('prestige_squared');
+    location.reload();
   }
 };
 
