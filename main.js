@@ -5,6 +5,8 @@ var game = {
   games: [],
   state: {},
   eMeta: undefined,
+  eTotal: undefined,
+  eBuy: undefined,
   init: function() {
     console.log('init');
     game.initGameContainers()
@@ -46,6 +48,8 @@ var game = {
     }
 
     game.eMeta = document.getElementById('span_metacoins');
+    game.eTotal = document.getElementById('span_total_points'); 
+    game.eBuy = document.getElementById('button_metacoin_buy');
 
     game.load();
 
@@ -89,7 +93,9 @@ var game = {
     });
 
     
-    game.eMeta.innerText = game.state.metacoins + ' (' + game.getTotal() + ')';
+    game.eMeta.innerText = game.state.metacoins;
+    game.eTotal.innerText = game.getTotal();
+    game.eBuy.innerText = 'Buy for ? points';
 
     game.save();
 
