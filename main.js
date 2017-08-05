@@ -7,6 +7,7 @@ var game = {
   eMeta: undefined,
   eTotal: undefined,
   eBuy: undefined,
+  lastSpeaker: undefined,
   init: function() {
     console.log('init');
     game.initGameContainers()
@@ -48,7 +49,7 @@ var game = {
     }
 
     game.eMeta = document.getElementById('span_metacoins');
-    game.eTotal = document.getElementById('span_total_points'); 
+    game.eTotal = document.getElementById('span_total_points');
     game.eBuy = document.getElementById('button_metacoin_buy');
 
     game.load();
@@ -92,7 +93,7 @@ var game = {
       g.draw();
     });
 
-    
+
     game.eMeta.innerText = game.state.metacoins;
     game.eTotal.innerText = game.getTotal();
     game.eBuy.innerText = 'Buy for ? points';
@@ -142,7 +143,48 @@ var game = {
   reset: function() {
     localStorage.removeItem('prestige_squared');
     location.reload();
+  },
+  showOverlay: function() {
+    var fc = document.getElementById('full_container');
+    fc.style.filter = 'blur(5px)';
+    var o = document.getElementById('overlay');
+    o.style.display = 'flex';
+  },
+  hideOverlay: function() {
+    var fc = document.getElementById('full_container');
+    fc.style.filter = '';
+    var o = document.getElementById('overlay');
+    o.style.display = 'none';
+  },
+  addChatMsg: function(name, msg) {
+    var otf = document.getElementById('overlay_text_flow');
+    var speakerAvatars = {asterisk_man: 'one_40x40.png', uni: 'two_40x40.png'};
+    var speakerColors = {asterisk_man: 'yellow', uni: 'purple'};
+    var newHTML = '<div>';
+    var newSpeaker = game.lastSpeaker !== name;
+    game.lastSpeaker = name;
+    if (newSpeaker) {
+      newHTML += '<div style="color: ' + speakerColors[name] + ';" class="text_name_line"><img src="' + speakerAvatars[name] + '">' + name + '</div>';
+    }
+    newHTML += '<div class="text_text_box">' + msg + '</div></div>';
+    otf.innerHTML += newHTML;
+  },
+  clearChatMsg: function() {
+    var otf = document.getElementById('overlay_text_flow');
+    otf.innerHTML = '';
   }
+
 };
 
 game.init();
+
+/*
+setTimeout(() => {
+  game.showOverlay();
+  game.addChatMsg('asterisk_man', 'Hello');
+  game.addChatMsg('uni', 'Good morning');
+  game.addChatMsg('asterisk_man', 'Welcome to the game');
+  game.addChatMsg('asterisk_man', 'I hope you enjoy this game. It takes a long time to write and this line should hopefully wrap.');
+  game.addChatMsg('uni', 'It does..I hope.');
+}, 1000)
+*/

@@ -5,27 +5,38 @@
     <link rel='stylesheet' type='text/css' href='./main.css'>
   </head>
   <body>
-    <div id='title'>prestige<sup>2</sup></div>
-    <div id='meta_container'>
-      <div>
-        <span id='span_metacoins'>0</span> metacoins owned. 
-        <button type='button' id='button_metacoin_buy'>Buy for 10 points</button>
+    <div id='overlay'>
+      <div id='overlay_box'>
+        <div id='overlay_text_flow'>
+        </div>
       </div>
-      <div>
-        Total points: <span id='span_total_points'>0</span>
+
+    </div>
+    <div id='full_container'>
+      <div id='title'>prestige<sup>2</sup></div>
+      <div id='meta_container'>
+        <div>
+          <span id='span_metacoins'>0</span> metacoins owned.
+          <button type='button' id='button_metacoin_buy'>Buy for 10 points</button>
+        </div>
+        <div>
+          Total points: <span id='span_total_points'>0</span>
+        </div>
+      </div>
+      <div id='grid_container'>
+        <div id='game_container_0' class='game_container'></div>
+        <div id='game_container_1' class='game_container'></div>
+        <div id='game_container_2' class='game_container'></div>
+        <div id='game_container_3' class='game_container'></div>
+        <div id='game_container_4' class='game_container'></div>
+        <div id='game_container_5' class='game_container'></div>
+        <div id='game_container_6' class='game_container'></div>
+        <div id='game_container_7' class='game_container'></div>
+        <div id='game_container_8' class='game_container'></div>
       </div>
     </div>
-    <div id='grid_container'>
-      <div id='game_container_0' class='game_container'></div>
-      <div id='game_container_1' class='game_container'></div>
-      <div id='game_container_2' class='game_container'></div>
-      <div id='game_container_3' class='game_container'></div>
-      <div id='game_container_4' class='game_container'></div>
-      <div id='game_container_5' class='game_container'></div>
-      <div id='game_container_6' class='game_container'></div>
-      <div id='game_container_7' class='game_container'></div>
-      <div id='game_container_8' class='game_container'></div>
-    </div>
+    <img id='img_avatar1' src='./one_40x40.png' style='display: none;'>
+    <img id='img_avatar2' src='./two_40x40.png' style='display: none;'>
     <script src='./Prestige.js'></script>
     <script src='./main.js'></script>
   </body>
