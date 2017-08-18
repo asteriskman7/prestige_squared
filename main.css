@@ -18,6 +18,17 @@ td {
   padding-top: 0.5em;
 }
 
+.img_preload {
+  display: none;
+}
+
+.img_avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 20px;
+}
+
 #overlay {
   display: none;
   position: absolute;
@@ -51,9 +62,16 @@ td {
 }
 
 .text_text_box {
-  margin-left: 40px;
+  margin-left: 60px;
   margin-top: 3px;
   color: hsla(0,0%,100%,.7);
+}
+
+#button_close_chat {
+  position: absolute;
+  width: 2em;
+  top: 0;
+  left: calc(50% - 1em);
 }
 
 #full_container {
@@ -87,7 +105,8 @@ td {
 .game_container {
   width: 100%;
   height: 100%;
-  display: block;
+  /*display: block; */
+  display: none;
   position: absolute;
   background: white;
   outline: 1px black solid;
@@ -117,11 +136,13 @@ td {
   font-size: 30px;
   flex: 0 1 50px;
   color: #ffffec;
+  display: none;
 }
 
 #meta_container {
   flex: 0 1 50px;
   color: #FF9346;
+  display: none;
 }
 
 .coins {
