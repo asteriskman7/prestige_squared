@@ -48,23 +48,23 @@ class Prestige {
     return [
       {name: 'Nanoprestige',     requirement: (level) => Math.floor(Math.pow(1.5, level)*10), effect: (level) => level+1, count: 0},
       {name: 'Microprestige',    requirement: (level) => Math.pow(2, level+1),                effect: (level) => level+1, count: 0},
-      {name: 'Miniprestige',     requirement: (level) => Math.pow(3, level+1),                effect: (level) => level+1, count: 0}, 
-      {name: 'Small Prestige',   requirement: (level) => Math.pow(4, level+1),                effect: (level) => level+1, count: 0}, 
-      {name: 'Partial Prestige', requirement: (level) => Math.pow(5, level+1),                effect: (level) => level+1, count: 0}, 
-      {name: 'Full Prestige',    requirement: (level) => Math.pow(6, level+1),                effect: (level) => level+1, count: 0}, 
-      {name: 'Multiprestige',    requirement: (level) => Math.pow(7, level+1),                effect: (level) => level+1, count: 0}, 
-      {name: 'Hyperprestige',    requirement: (level) => Math.pow(8, level+1),                effect: (level) => level+1, count: 0}, 
-      {name: 'Ultraprestige',    requirement: (level) => Math.pow(9, level+1),                effect: (level) => level+1, count: 0}, 
-      {name: 'Final Prestige',   requirement: (level) => Math.pow(10, level+1),               effect: (level) => level+1, count: 0}, 
+      {name: 'Miniprestige',     requirement: (level) => Math.pow(3, level+1),                effect: (level) => level+1, count: 0},
+      {name: 'Small Prestige',   requirement: (level) => Math.pow(4, level+1),                effect: (level) => level+1, count: 0},
+      {name: 'Partial Prestige', requirement: (level) => Math.pow(5, level+1),                effect: (level) => level+1, count: 0},
+      {name: 'Full Prestige',    requirement: (level) => Math.pow(6, level+1),                effect: (level) => level+1, count: 0},
+      {name: 'Multiprestige',    requirement: (level) => Math.pow(7, level+1),                effect: (level) => level+1, count: 0},
+      {name: 'Hyperprestige',    requirement: (level) => Math.pow(8, level+1),                effect: (level) => level+1, count: 0},
+      {name: 'Ultraprestige',    requirement: (level) => Math.pow(9, level+1),                effect: (level) => level+1, count: 0},
+      {name: 'Final Prestige',   requirement: (level) => Math.pow(10, level+1),               effect: (level) => level+1, count: 0},
     ];
   }
   static intToTier(i) {
     return ['coins', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X'][i];
   }
   genCloseButton() {
-    return '<button type="button" class="button_close">X</button>';
+    return `<button type="button" class="button_close" id="button_close_${this.name}">X</button>`;
   }
-  genHeader() {  
+  genHeader() {
     var html = '<div>';
     html += '<div class="coins"><span id="'+ this.name + '_coins"></span> coins</div>'
     html += '<div class="cps"><span id="' + this.name + '_cps"></span> coins/second</div>';
@@ -79,7 +79,7 @@ class Prestige {
     html += '</tr>';
     var i = 0;
     this.levels.forEach((l) => {
-      html += '<tr>';  
+      html += '<tr>';
       html += '<td>' + Prestige.intToTier(i+1) + '</td>';
       html += '<td>' + l.name + '</td>';
       html += '<td id="' + this.name + '_requirement_' + i +'">' + l.requirement(l.count) + 'x Tier ' + Prestige.intToTier(i) + '</td>';
@@ -176,14 +176,14 @@ class PrestigeOne extends Prestige {
     return [
       {name: 'One',              requirement: (level) => 1, effect: (level) => 1, count: 0},
       {name: 'Two',              requirement: (level) => 1, effect: (level) => 1, count: 0},
-      {name: 'Three',            requirement: (level) => 1, effect: (level) => 1, count: 0}, 
-      {name: 'Four',             requirement: (level) => 1, effect: (level) => 1, count: 0}, 
-      {name: 'Five',             requirement: (level) => 1, effect: (level) => 1, count: 0}, 
-      {name: 'Six',              requirement: (level) => 1, effect: (level) => 1, count: 0}, 
-      {name: 'Seven',            requirement: (level) => 1, effect: (level) => 1, count: 0}, 
-      {name: 'Eight',            requirement: (level) => 1, effect: (level) => 1, count: 0}, 
-      {name: 'Nine',             requirement: (level) => 1, effect: (level) => 1, count: 0}, 
-      {name: 'Ten',              requirement: (level) => 1, effect: (level) => 1, count: 0}, 
+      {name: 'Three',            requirement: (level) => 1, effect: (level) => 1, count: 0},
+      {name: 'Four',             requirement: (level) => 1, effect: (level) => 1, count: 0},
+      {name: 'Five',             requirement: (level) => 1, effect: (level) => 1, count: 0},
+      {name: 'Six',              requirement: (level) => 1, effect: (level) => 1, count: 0},
+      {name: 'Seven',            requirement: (level) => 1, effect: (level) => 1, count: 0},
+      {name: 'Eight',            requirement: (level) => 1, effect: (level) => 1, count: 0},
+      {name: 'Nine',             requirement: (level) => 1, effect: (level) => 1, count: 0},
+      {name: 'Ten',              requirement: (level) => 1, effect: (level) => 1, count: 0},
     ];
   }
 }
@@ -217,5 +217,3 @@ class PrestigeOneNoReset extends PrestigeOne {
     this.draw();
   }
 }
-
-
